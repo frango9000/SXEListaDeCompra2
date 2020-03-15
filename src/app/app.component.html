@@ -2,7 +2,9 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#"><mdb-icon fas icon="home"></mdb-icon> Tienda</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" href="#">
+    <mdb-icon fas icon="home"></mdb-icon>
+    Tienda</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
@@ -10,11 +12,19 @@
     <!-- Links Left-->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="boxes"></mdb-icon> Catalogo<span class="sr-only">(current)</span></a>
+        <a class="nav-link waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="boxes"></mdb-icon>
+          Catalogo<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="shopping-cart"></mdb-icon>
+          <span class="cartbadge">0</span> Carrito
+        </a>
       </li>
     </ul>
 
-    <!-- Links Rigth-->
+    <!-- Links Right-->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
         <a class="nav-link waves-light" mdbWavesEffect
@@ -30,16 +40,16 @@
           Registro
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect>
-          <mdb-icon fas icon="shopping-cart"></mdb-icon>
-          <span class="cartbadge">0</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           <mdb-icon fas icon="user"></mdb-icon>
-          Perfil</a>
+          Perfil<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Nombre</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Id</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">My account</a>
+        </div>
       </li>
     </ul>
   </links>

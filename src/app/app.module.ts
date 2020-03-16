@@ -9,6 +9,7 @@ import {CatalogoComponent} from './catalogo/catalogo.component';
 import {CarritoComponent} from './carrito/carrito.component';
 import {HomeComponent} from './home/home.component';
 import {PerfilComponent} from './perfil/perfil.component';
+import {ProductoComponent} from './producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {PerfilComponent} from './perfil/perfil.component';
     CatalogoComponent,
     CarritoComponent,
     HomeComponent,
-    PerfilComponent
+    PerfilComponent,
+    ProductoComponent
   ],
   imports: [
     BrowserModule,

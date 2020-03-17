@@ -1,6 +1,4 @@
 export class ProductoModel {
-  public id: number;
-
-  constructor(public nombre: string) {
+  constructor(public id: number, public nombre: string) {
   }
 }

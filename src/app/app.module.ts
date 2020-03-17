@@ -10,8 +10,9 @@ import {CarritoComponent} from './carrito/carrito.component';
 import {HomeComponent} from './home/home.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {ProductoComponent} from './producto/producto.component';
-import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../environments/environment';
 import {AppNavbarComponent} from './app-navbar.component';
 import {AppFooterComponent} from './app-footer.component';
@@ -33,7 +34,8 @@ import {AppFooterComponent} from './app-footer.component';
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,20 +2,27 @@
 <mdb-navbar class="col" SideClass="navbar navbar-expand-md navbar-dark unique-color" [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" routerLink="/home">
-    <mdb-icon fas icon="home"></mdb-icon>
-    Tienda</a></mdb-navbar-brand>
+  <mdb-navbar-brand>
+    <a class="navbar-brand" routerLink="/">
+      <mdb-icon fas icon="pizza-slice"></mdb-icon>
+    </a>
+  </mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
 
     <!-- Links Left-->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="/home">
+          <mdb-icon fas icon="home"></mdb-icon>
+          Tienda
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="/catalogo">
           <mdb-icon fas icon="boxes"></mdb-icon>
           Catalogo
-          <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
@@ -29,11 +36,11 @@
 
     <!-- Links Right-->
     <ul class="navbar-nav ml-auto">
-      <ng-container *ngIf="fireAuthService.user | async as user; then loggedInButtons; else loggedOutButtons">
+      <ng-container *ngIf="fireAuthService.user | async; then loggedInButtons; else loggedOutButtons">
       </ng-container>
 
       <ng-template #loggedInButtons>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect (click)="logout()">
             <mdb-icon fas icon="sign-out-alt"></mdb-icon>
             Logout
@@ -53,7 +60,7 @@
       </ng-template>
 
       <ng-template #loggedOutButtons>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect
              data-toggle="modal" data-target="#basicExample" (click)="loginFrame.show()">
             <mdb-icon fas icon="sign-in-alt"></mdb-icon>

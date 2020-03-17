@@ -30,8 +30,12 @@ export class FireAuthService {
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, pass)
       .then(result => {
         console.log('Usuario creado: ', result);
+        this.authUser = result.user;
+        this.email = this.authUser.email;
         return result.user.updateProfile({
           displayName: name
+        }).then(response => {
+          this.name = this.authUser.displayName;
         });
       });
     // .catch(error => {

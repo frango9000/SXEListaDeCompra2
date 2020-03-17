@@ -55,8 +55,8 @@ export class AppNavbarComponent implements OnInit {
   checkPasswordsTrigger(control: FormControl) {
     if (this.signupValidatingForm) {
       this.signupValidatingForm.controls.signupFormModalPassword2.updateValueAndValidity();
-      return null;
     }
+    return null;
   }
 
   checkPasswords(group: FormControl) { // here we have the 'passwords' group

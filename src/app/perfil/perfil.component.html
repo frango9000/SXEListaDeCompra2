@@ -1,10 +1,11 @@
 <div class="row">
+
   <div class="col-md-6">
     <div class="md-form mb-5">
       <mdb-icon fas icon="at" class="prefix grey-text"></mdb-icon>
-      <input type="email" id="editForm--email" [formControl]="profileFormEmail" class="form-control"
+      <input type="email" id="profileFormEmailId" [formControl]="profileFormEmail" class="form-control"
              mdbInput mdbValidate>
-      <label for="editForm--email">Your email</label>
+      <label for="profileFormEmailId">Your email</label>
       <mdb-error
         *ngIf="profileFormEmail.invalid && (profileFormEmail.dirty || profileFormEmail.touched)">
         Input invalid
@@ -16,9 +17,9 @@
     </div>
     <div class="md-form mb-5">
       <mdb-icon fas icon="user-tag" class="prefix grey-text"></mdb-icon>
-      <input type="email" id="editForm-name" [formControl]="profileFormName" class="form-control"
+      <input type="email" id="profileFormNameId" [formControl]="profileFormName" class="form-control"
              mdbInput mdbValidate>
-      <label for="editForm-name">Your name</label>
+      <label for="profileFormNameId">Your name</label>
       <mdb-error
         *ngIf="profileFormName.invalid && (profileFormName.dirty || profileFormName.touched)">
         Input invalid
@@ -29,28 +30,60 @@
       </mdb-success>
     </div>
     <div class="modal-footer d-flex justify-content-center">
+      <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="editProfile()">Guardar Cambios
+      </button>
     </div>
-    <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="editProfile()">Guardar Cambios
-    </button>
   </div>
 
   <div class="col-md-6">
-    <div class="md-form mb-4">
-      <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
-      <input type="password" id="defaultForm-pass" [formControl]="profileFormPassword" class="form-control"
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="unlock" class="prefix grey-text"></mdb-icon>
+      <input type="password" id="passFormOldId" [formControl]="passFormOld" class="form-control"
              mdbInput mdbValidate>
-      <label for="defaultForm-pass">New password</label>
+      <label for="passFormOldId">Old password</label>
       <mdb-error
-        *ngIf="profileFormPassword.invalid && (profileFormPassword.dirty || profileFormPassword.touched)">
+        *ngIf="passFormOld.invalid && (passFormOld.dirty || passFormOld.touched)">
         Input invalid
       </mdb-error>
       <mdb-success
-        *ngIf="profileFormPassword.valid && (profileFormPassword.dirty || profileFormPassword.touched)">
+        *ngIf="passFormOld.valid && (passFormOld.dirty || passFormOld.touched)">
         Input valid
       </mdb-success>
     </div>
-    <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="changePassword()">Cambiar Contraseña
-    </button>
-  </div>
 
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="key" class="prefix grey-text"></mdb-icon>
+      <input type="password" id="passFormPass1Id" [formControl]="passFormPass1" class="form-control"
+             mdbInput mdbValidate>
+      <label for="passFormPass1Id">New password</label>
+      <mdb-error
+        *ngIf="passFormPass1.invalid && (passFormPass1.dirty || passFormPass1.touched)">
+        Input invalid
+      </mdb-error>
+      <mdb-success
+        *ngIf="passFormPass1.valid && (passFormPass1.dirty || passFormPass1.touched)">
+        Input valid
+      </mdb-success>
+    </div>
+
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
+      <input type="password" id="passFormPass2Id" [formControl]="passFormPass2" class="form-control"
+             mdbInput mdbValidate>
+      <label for="passFormPass2Id">Confirm password</label>
+      <mdb-error
+        *ngIf="passFormPass2.invalid && (passFormPass2.dirty || passFormPass2.touched)">
+        Input invalid
+      </mdb-error>
+      <mdb-success
+        *ngIf="passFormPass2.valid && (passFormPass2.dirty || passFormPass2.touched)">
+        Input valid
+      </mdb-success>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="changePassword()">Cambiar
+        Contraseña
+      </button>
+    </div>
+  </div>
 </div>

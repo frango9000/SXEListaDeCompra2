@@ -5,12 +5,12 @@
       <p class="h4 mb-4">Productos Disponibles</p>
       <hr>
       <ul class="list-group">
-        <li *ngFor="let producto of fireDb.productos | async"
+        <li *ngFor="let producto of fireDbService.productos | async"
             class="list-group-item d-flex justify-content-between align-items-center">
           <mdb-badge pill="true" primary="true">{{producto.id}}</mdb-badge>
           {{producto.nombre}}
           <button type="button" class="close" aria-label="Close" (click)="eliminarProducto(producto.id)">
-            <span aria-hidden="true">×</span>
+            <mdb-icon fas icon="trash-alt"></mdb-icon>
           </button>
         </li>
       </ul>
@@ -22,8 +22,8 @@
       <!-- Default form register -->
       <p class="h4 mb-4">Nuevo Producto</p>
       <hr>
-
-      <span class="badge badge-danger mr-2">{{fireDb.nextIndex}}</span>
+      Siguiente id:
+      <span class="badge badge-danger mr-2">{{fireDbService.nextIndex}}</span>
       <input type="text" id="formAgregarProducto" class="form-control mb-4" placeholder="Nuevo Producto"
              #inputNombreProducto>
       <!-- Sign up button -->

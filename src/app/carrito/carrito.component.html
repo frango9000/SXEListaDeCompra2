@@ -1,1 +1,15 @@
-<p>carrito works!</p>
+<div class="col-md-10">
+
+  <p class="h4 mb-4">Tu Carrito</p>
+
+  <ul class="list-group" *ngIf="fireDbService.idProductos">
+    <li class="list-group-item d-flex "
+        *ngFor="let producto of fireDbService.idProductos | async">
+      <button type="button" class="close mr-2" aria-label="Close" (click)="eliminarProducto(producto.id)">
+        <mdb-icon fas icon="trash-alt"></mdb-icon>
+      </button>
+      <mdb-badge pill="true" primary="true" style="width: 50px" class="mr-2">Id: {{producto.id}}</mdb-badge>
+      {{producto.nombre}}
+    </li>
+  </ul>
+</div>

@@ -15,5 +15,8 @@ export class CatalogoComponent implements OnInit {
 
   }
 
+  agregarProducto(id: number, nombre: string) {
+    return this.fireDbService.agregarProductoCarrito(id, nombre);
+  }
 
 }

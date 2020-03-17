@@ -15,27 +15,31 @@ export class FireDbService {
   constructor(public angularFireDb: AngularFireDatabase,
               public fireAuthService: FireAuthService) {
     angularFireDb.object<number>('productosIndex/index').valueChanges().subscribe(value => this.nextIndex = value);
-    fireAuthService.user.pipe(map(value => {
+
+
+    this.fireAuthService.user.subscribe(value => {
       if (value) {
-        this.idProductos = this.angularFireDb.list<ProductoModel>('carritos/' + value.uid).valueChanges()
-          .pipe(
-            map(value1 => {
-              return value1.map(value2 => new ProductoModel(value2.id, value2.nombre));
-            }));
+        this.idProductos = this.angularFireDb.list('carritos/' + value.uid).snapshotChanges()
+          .pipe(map(value1 => {
+            return value1.map((value2) => {
+              return new ProductoModel(+value2.key, '' + value2.payload.val());
+            });
+          }));
       } else {
         this.idProductos = null;
       }
-    }));
+    });
+
+
   }
 
   productos: Observable<ProductoModel[]> = this.angularFireDb.list('productos').snapshotChanges().pipe(map(value => {
-    console.log(value);
     return value.map(value1 => {
       return new ProductoModel(+value1.key, '' + value1.payload.val());
     });
   }));
 
-  idProductos: Observable<ProductoModel[] | null> = null;
+  idProductos: Observable<ProductoModel[] | null>;
 
 
   agregarProducto(nombre: string) {
@@ -55,5 +59,19 @@ export class FireDbService {
 
   eliminarProducto(id: number) {
     return this.angularFireDb.object('productos/' + id).remove();
+  }
+
+  eliminarProductoCarrito(id: number) {
+    if (this.fireAuthService.uid != null) {
+      return this.angularFireDb.object('carritos/' + this.fireAuthService.uid + '/' + id).remove();
+    }
+  }
+
+  agregarProductoCarrito(id: number, nombre: string) {
+    if (this.fireAuthService.uid != null) {
+      return this.angularFireDb.object('carritos/' + this.fireAuthService.uid + '/' + id).set(nombre)
+        .then(value1 => console.log('insercion carrito OK: ', value1))
+        .catch(reason => console.log('insercion carrito ERR: ', reason));
+    }
   }
 }

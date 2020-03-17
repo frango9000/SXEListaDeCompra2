@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FireAuthService} from './firebase/fire-auth.service';
 import {ModalDirective} from 'angular-bootstrap-md';
+import {FireDbService} from './firebase/fire-db.service';
 
 @Component({
   selector: 'app-app-navbar',
@@ -33,7 +34,8 @@ export class AppNavbarComponent implements OnInit {
   loginError: string = '';
   signupError: string = '';
 
-  constructor(public fireAuthService: FireAuthService) {
+  constructor(public fireAuthService: FireAuthService,
+              public fireDbService: FireDbService) {
   }
 
   ngOnInit(): void {

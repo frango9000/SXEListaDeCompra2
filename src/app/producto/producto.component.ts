@@ -12,7 +12,7 @@ export class ProductoComponent implements OnInit {
   insertResult = '';
 
   constructor(private fireAuthService: FireAuthService,
-              public fireDb: FireDbService) {
+              public fireDbService: FireDbService) {
   }
 
   ngOnInit(): void {
@@ -20,7 +20,7 @@ export class ProductoComponent implements OnInit {
 
   agregarProducto(value: string) {
     if (value.trim().length > 0) {
-      return this.fireDb.agregarProducto(value).then(_ => {
+      return this.fireDbService.agregarProducto(value).then(_ => {
         this.insertResult = 'Insercion realizada';
       });
     }
@@ -28,7 +28,7 @@ export class ProductoComponent implements OnInit {
 
 
   eliminarProducto(id: number) {
-    return this.fireDb.eliminarProducto(id).then(_ => {
+    return this.fireDbService.eliminarProducto(id).then(_ => {
       this.insertResult = 'Producto Eliminado';
     });
 

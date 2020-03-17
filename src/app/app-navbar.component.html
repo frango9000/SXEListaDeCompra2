@@ -33,7 +33,8 @@
         <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect routerLink="/carrito">
             <mdb-icon fas icon="shopping-cart"></mdb-icon>
-            <mdb-badge pill="true" success="true" class="cartbadge">0</mdb-badge>
+            <mdb-badge *ngIf="fireDbService.idProductos | async as carrito" pill="true" success="true"
+                       class="cartbadge">{{carrito.length}}</mdb-badge>
             Carrito
           </a>
         </li>

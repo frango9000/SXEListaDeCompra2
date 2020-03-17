@@ -24,7 +24,7 @@
             id:{{producto.id}}
           </mdb-card-text>
           <div class="">
-            <a mdbBtn color="primary" mdbWavesEffect>
+            <a mdbBtn color="primary" mdbWavesEffect (click)="agregarProducto(producto.id, producto.nombre)">
               Agregar
               <mdb-icon fas icon="cart-plus fa-2x"></mdb-icon>
             </a>

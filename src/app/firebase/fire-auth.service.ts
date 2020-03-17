@@ -9,14 +9,18 @@ import {User} from 'firebase';
 })
 export class FireAuthService {
 
+  uid: string = null;
+
   constructor(public angularFireAuth: AngularFireAuth) {
   }
 
   user: Observable<User | null> = this.angularFireAuth.authState.pipe(map(authState => {
-    console.log('authState: ', authState);
+    // console.log('authState: ', authState);
     if (authState) {
+      this.uid = authState.uid;
       return authState;
     } else {
+      this.uid = null;
       return null;
     }
   }));

@@ -31,8 +31,8 @@ export class AppNavbarComponent implements OnInit {
   @ViewChild('signupFrame', {static: true}) signupFrame: ModalDirective;
   loginValidatingForm: FormGroup;
   signupValidatingForm: FormGroup;
-  loginError: string = '';
-  signupError: string = '';
+  loginError = '';
+  signupError = '';
 
   constructor(public fireAuthService: FireAuthService,
               public fireDbService: FireDbService) {
@@ -40,14 +40,31 @@ export class AppNavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginValidatingForm = new FormGroup({
-      loginFormModalEmail: new FormControl('', Validators.email),
-      loginFormModalPassword: new FormControl('', Validators.required)
+      loginFormModalEmail: new FormControl('', Validators.compose([Validators.required, Validators.minLength(5), Validators.email])),
+      loginFormModalPassword: new FormControl('', Validators.compose([Validators.required, Validators.minLength(6)]))
     });
     this.signupValidatingForm = new FormGroup({
-      signupFormModalName: new FormControl('', Validators.required),
-      signupFormModalEmail: new FormControl('', Validators.email),
-      signupFormModalPassword: new FormControl('', Validators.required),
+      signupFormModalName: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      signupFormModalEmail: new FormControl('', [Validators.required, Validators.minLength(5), Validators.email]),
+      signupFormModalPassword: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswordsTrigger.bind(this)]),
+      signupFormModalPassword2: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswords.bind(this)])
     });
+  }
+
+
+  checkPasswordsTrigger(control: FormControl) {
+    if (this.signupValidatingForm) {
+      this.signupValidatingForm.controls.signupFormModalPassword2.updateValueAndValidity();
+      return null;
+    }
+  }
+
+  checkPasswords(group: FormControl) { // here we have the 'passwords' group
+    if (this.signupValidatingForm && group.value !== this.signupValidatingForm.controls.signupFormModalPassword.value) {
+      return {passwordNotMatch: true};
+    } else {
+      return null;
+    }
   }
 
 
@@ -69,6 +86,10 @@ export class AppNavbarComponent implements OnInit {
 
   get signupFormModalPassword() {
     return this.signupValidatingForm.get('signupFormModalPassword');
+  }
+
+  get signupFormModalPassword2() {
+    return this.signupValidatingForm.get('signupFormModalPassword2');
   }
 
 

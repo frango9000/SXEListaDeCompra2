@@ -59,8 +59,7 @@
               <mdb-icon fas icon="user-edit"></mdb-icon>
               Mi Perfil
             </a>
-            <a *ngIf="user.email === 'fsancheztemprano@danielcastelao.org'" class="dropdown-item waves-light"
-               mdbWavesEffect routerLink="/producto">
+            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/producto">
               <mdb-icon fas icon="edit"></mdb-icon>
               Admin
             </a>
@@ -188,7 +187,7 @@
           </mdb-success>
         </div>
 
-        <div class="md-form mb-4">
+        <div class="md-form mb-5">
           <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
           <input type="password" id="orangeForm-pass" class="form-control" [formControl]="signupFormModalPassword"
                  mdbInput mdbValidate>
@@ -199,6 +198,21 @@
           </mdb-error>
           <mdb-success
             *ngIf="signupFormModalPassword.valid && (signupFormModalPassword.dirty || signupFormModalPassword.touched)">
+            Input valid
+          </mdb-success>
+        </div>
+
+        <div class="md-form mb-4">
+          <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
+          <input type="password" id="orangeForm-pass2" class="form-control" [formControl]="signupFormModalPassword2"
+                 mdbInput mdbValidate>
+          <label for="orangeForm-pass">Repeat password</label>
+          <mdb-error
+            *ngIf="signupFormModalPassword2.invalid && (signupFormModalPassword2.dirty || signupFormModalPassword2.touched)">
+            Input invalid
+          </mdb-error>
+          <mdb-success
+            *ngIf="signupFormModalPassword2.valid && (signupFormModalPassword2.dirty || signupFormModalPassword2.touched)">
             Input valid
           </mdb-success>
         </div>

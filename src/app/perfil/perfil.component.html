@@ -1,1 +1,56 @@
-<p>perfil works!</p>
+<div class="row">
+  <div class="col-md-6">
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="at" class="prefix grey-text"></mdb-icon>
+      <input type="email" id="editForm--email" [formControl]="profileFormEmail" class="form-control"
+             mdbInput mdbValidate>
+      <label for="editForm--email">Your email</label>
+      <mdb-error
+        *ngIf="profileFormEmail.invalid && (profileFormEmail.dirty || profileFormEmail.touched)">
+        Input invalid
+      </mdb-error>
+      <mdb-success
+        *ngIf="profileFormEmail.valid && (profileFormEmail.dirty || profileFormEmail.touched)">Input
+        valid
+      </mdb-success>
+    </div>
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="user-tag" class="prefix grey-text"></mdb-icon>
+      <input type="email" id="editForm-name" [formControl]="profileFormName" class="form-control"
+             mdbInput mdbValidate>
+      <label for="editForm-name">Your name</label>
+      <mdb-error
+        *ngIf="profileFormName.invalid && (profileFormName.dirty || profileFormName.touched)">
+        Input invalid
+      </mdb-error>
+      <mdb-success
+        *ngIf="profileFormName.valid && (profileFormName.dirty || profileFormName.touched)">Input
+        valid
+      </mdb-success>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+    </div>
+    <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="editProfile()">Guardar Cambios
+    </button>
+  </div>
+
+  <div class="col-md-6">
+    <div class="md-form mb-4">
+      <mdb-icon fas icon="lock" class="prefix grey-text"></mdb-icon>
+      <input type="password" id="defaultForm-pass" [formControl]="profileFormPassword" class="form-control"
+             mdbInput mdbValidate>
+      <label for="defaultForm-pass">New password</label>
+      <mdb-error
+        *ngIf="profileFormPassword.invalid && (profileFormPassword.dirty || profileFormPassword.touched)">
+        Input invalid
+      </mdb-error>
+      <mdb-success
+        *ngIf="profileFormPassword.valid && (profileFormPassword.dirty || profileFormPassword.touched)">
+        Input valid
+      </mdb-success>
+    </div>
+    <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="changePassword()">Cambiar Contraseña
+    </button>
+  </div>
+
+</div>

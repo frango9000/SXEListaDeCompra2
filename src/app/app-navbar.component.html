@@ -25,39 +25,51 @@
           Catalogo
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="/carrito">
-          <mdb-icon fas icon="shopping-cart"></mdb-icon>
-          <mdb-badge pill="true" success="true" class="cartbadge">0</mdb-badge>
-          Carrito
-        </a>
-      </li>
     </ul>
 
     <!-- Links Right-->
     <ul class="navbar-nav ml-auto">
-      <ng-container *ngIf="fireAuthService.user | async; then loggedInButtons; else loggedOutButtons">
-      </ng-container>
-
-      <ng-template #loggedInButtons>
+      <ng-container *ngIf="fireAuthService.user | async as user; else loggedOutButtons">
         <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect (click)="logout()">
-            <mdb-icon fas icon="sign-out-alt"></mdb-icon>
-            Logout
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="/carrito">
+            <mdb-icon fas icon="shopping-cart"></mdb-icon>
+            <mdb-badge pill="true" success="true" class="cartbadge">0</mdb-badge>
+            Carrito
           </a>
+        </li>
+        <li class="nav-item">
+
         </li>
         <!-- Dropdown -->
         <li class="nav-item dropdown" dropdown>
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light">
             <mdb-icon fas icon="user"></mdb-icon>
-            Perfil<span class="caret"></span></a>
+            {{(user.displayName?.length > 0) ? (user.displayName) : ('N/A')}}<span class="caret"></span></a>
           <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">{{fireAuthService.name}}</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">{{fireAuthService.email}}</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/perfil">My account</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect>
+              <mdb-icon fas icon="fingerprint"></mdb-icon>
+              {{user.uid?.trim()}}
+            </a>
+            <a class="dropdown-item waves-light" mdbWavesEffect>
+              <mdb-icon fas icon="at"></mdb-icon>
+              {{user.email?.trim()}}
+            </a>
+            <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/perfil">
+              <mdb-icon fas icon="user-edit"></mdb-icon>
+              Mi Perfil
+            </a>
+            <a *ngIf="user.email === 'fsancheztemprano@danielcastelao.org'" class="dropdown-item waves-light"
+               mdbWavesEffect routerLink="/producto">
+              <mdb-icon fas icon="edit"></mdb-icon>
+              Admin
+            </a>
+            <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">
+              <mdb-icon fas icon="sign-out-alt"></mdb-icon>
+              Logout
+            </a>
           </div>
         </li>
-      </ng-template>
+      </ng-container>
 
       <ng-template #loggedOutButtons>
         <li class="nav-item">

@@ -8,17 +8,13 @@ import {User} from 'firebase';
   providedIn: 'root'
 })
 export class FireAuthService {
-  public email = '';
-  public name = '';
-  public authUser = null;
 
-  constructor(public fireAuth: AngularFireAuth) {
+  constructor(public angularFireAuth: AngularFireAuth) {
   }
 
-  user: Observable<User | null> = this.fireAuth.authState.pipe(map(authState => {
+  user: Observable<User | null> = this.angularFireAuth.authState.pipe(map(authState => {
     console.log('authState: ', authState);
     if (authState) {
-      this.authUser = authState;
       return authState;
     } else {
       return null;
@@ -27,15 +23,11 @@ export class FireAuthService {
 
 
   register(email: string, name: string, pass: string) {
-    return this.fireAuth.auth.createUserWithEmailAndPassword(email, pass)
+    return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, pass)
       .then(result => {
         console.log('Usuario creado: ', result);
-        this.authUser = result.user;
-        this.email = this.authUser.email;
         return result.user.updateProfile({
           displayName: name
-        }).then(response => {
-          this.name = this.authUser.displayName;
         });
       });
     // .catch(error => {
@@ -45,12 +37,9 @@ export class FireAuthService {
   }
 
   login(email: string, pass: string) {
-    return this.fireAuth.auth.signInWithEmailAndPassword(email, pass)
+    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, pass)
       .then(response => {
         console.log('User login: email: ', response);
-        this.authUser = response.user;
-        this.email = this.authUser.email;
-        this.name = this.authUser.displayName;
       });
     // .catch(error => {
     //   console.log('Error iniciando sesion', error);
@@ -59,6 +48,6 @@ export class FireAuthService {
   }
 
   logout() {
-    return this.fireAuth.auth.signOut();
+    return this.angularFireAuth.auth.signOut();
   }
 }

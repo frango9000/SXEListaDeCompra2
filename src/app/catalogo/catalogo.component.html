@@ -1,32 +1,37 @@
-<div class="container mt-5">
+<p class="h4 mb-4">Catalogo:</p>
+<!-- Card -->
+<div class="container">
   <div class="row">
-    <div class="col-md-6">
-      <ul class="list-group">
-        <li *ngFor="let producto of fireDb.productos"
-            class="list-group-item d-flex justify-content-between align-items-center">
-          <mdb-badge pill="true" primary="true">{{producto.id}}</mdb-badge>
-          {{producto.nombre}}
-          <button type="button" class="close" aria-label="Close" (click)="eliminarProducto(producto.id)">
-            <span aria-hidden="true">×</span>
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-6">
+    <div *ngFor="let producto of this.fireDbService.productos | async" class="col col-lg-3 col-md-4 col-sm-6 p-1">
+      <mdb-card>
+        <div class="view rgba-white-slight waves-light" mdbWavesEffect>
+          <!-- Card img -->
+          <mdb-card-img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
+                        alt="Card image cap"></mdb-card-img>
+          <a>
+            <div class="mask"></div>
+          </a>
+        </div>
+        <!--Card content-->
+        <mdb-card-body>
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{producto.nombre}}</h4>
+          </mdb-card-title>
 
-      <!-- Default form register -->
-      <p class="h4 mb-4">Nuevo Producto</p>
-      <input type="text" id="formAgregarProducto" class="form-control mb-4" placeholder="Nuevo Producto"
-             #inputNombreProducto>
-      <!-- Sign up button -->
-      <button mdbBtn color="info" block="true" class="my-4" type="submit"
-              (click)="agregarProducto(inputNombreProducto.value)">Agregar
-      </button>
-      <hr>
-      <p>{{insertResult}}</p>
-
-      <!-- Default form register -->
+          <!--Text-->
+          <mdb-card-text>
+            id:{{producto.id}}
+          </mdb-card-text>
+          <div class="">
+            <a mdbBtn color="primary" mdbWavesEffect>
+              Agregar
+              <mdb-icon fas icon="cart-plus fa-2x"></mdb-icon>
+            </a>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+      <!-- Card -->
     </div>
   </div>
 </div>
-{{fireDb.nextIndex}}

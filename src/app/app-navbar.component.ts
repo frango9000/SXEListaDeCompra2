@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FireAuthService} from './firebase/fire-auth.service';
-import {ModalDirective} from 'angular-bootstrap-md';
 import {FireDbService} from './firebase/fire-db.service';
 import {DialogService} from './dialogs/dialog.service';
 
@@ -19,16 +18,9 @@ import {DialogService} from './dialogs/dialog.service';
       border-radius: 9px;
       margin-left: -10px;
     }
-
-    .loginError {
-      color: darkred;
-    }
   `]
 })
 export class AppNavbarComponent implements OnInit {
-
-  @ViewChild('loginFrame', {static: true}) loginFrame: ModalDirective;
-  @ViewChild('signupFrame', {static: true}) signupFrame: ModalDirective;
 
   constructor(public fireAuthService: FireAuthService,
               public fireDbService: FireDbService,
@@ -37,9 +29,6 @@ export class AppNavbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
 
 
   logout() {

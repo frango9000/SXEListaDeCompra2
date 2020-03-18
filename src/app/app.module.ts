@@ -16,6 +16,8 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {environment} from '../environments/environment';
 import {AppNavbarComponent} from './app-navbar.component';
 import {AppFooterComponent} from './app-footer.component';
+import {PasswordDialogComponent} from './dialogs/password-dialog/password-dialog.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,11 +29,13 @@ import {AppFooterComponent} from './app-footer.component';
     ProductoComponent,
     AppNavbarComponent,
     AppFooterComponent,
+    PasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
+    NgbModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
@@ -40,4 +44,5 @@ import {AppFooterComponent} from './app-footer.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FireAuthService} from './firebase/fire-auth.service';
 import {ModalDirective} from 'angular-bootstrap-md';
 import {FireDbService} from './firebase/fire-db.service';
+import {DialogService} from './dialogs/dialog.service';
 
 @Component({
   selector: 'app-app-navbar',
@@ -35,7 +36,8 @@ export class AppNavbarComponent implements OnInit {
   signupError = '';
 
   constructor(public fireAuthService: FireAuthService,
-              public fireDbService: FireDbService) {
+              public fireDbService: FireDbService,
+              public dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -151,5 +153,13 @@ export class AppNavbarComponent implements OnInit {
     this.signupValidatingForm.reset();
     this.loginError = '';
     this.signupError = '';
+  }
+
+  test() {
+    this.dialogService.passwordDialog('email0', 'name0', 'url://').then(value => {
+      console.log('passwordDialog then ', value);
+    }).catch(reason => {
+      console.log('passwordDialog err ', reason);
+    });
   }
 }

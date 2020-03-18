@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FireAuthService} from '../firebase/fire-auth.service';
 
 @Component({
   selector: 'app-perfil',
@@ -8,7 +9,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class PerfilComponent implements OnInit {
 
-  constructor() {
+  providers = null;
+
+  constructor(public fireAuthService: FireAuthService) {
   }
 
   editProfileValidatingForm: FormGroup;
@@ -23,6 +26,16 @@ export class PerfilComponent implements OnInit {
       passFormOld: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passFormPass1: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswordsTrigger.bind(this)]),
       passFormPass2: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswords.bind(this)])
+    });
+
+    this.fireAuthService.user.subscribe(value => {
+      if (value) {
+        this.providers = this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(value.email).then(value1 => {
+          return value1;
+        });
+      } else {
+        this.providers = null;
+      }
     });
   }
 

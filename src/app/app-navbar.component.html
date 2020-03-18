@@ -4,7 +4,7 @@
   <!-- Navbar brand -->
   <mdb-navbar-brand>
     <a class="navbar-brand" routerLink="/">
-      <mdb-icon fas icon="pizza-slice"></mdb-icon>
+      <mdb-icon fab icon="pied-piper-alt" size="3x"></mdb-icon>
     </a>
   </mdb-navbar-brand>
 
@@ -141,7 +141,30 @@
         <div class="flex-center loginError">{{loginError}}</div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button mdbBtn color="default" class="waves-light" mdbWavesEffect (click)="login()">Login</button>
+        <div class="row d-flex justify-content-center">
+          <button mdbBtn color="green" class="waves-light col-md-6 accent-4" mdbWavesEffect (click)="login()">
+            <mdb-icon fas icon="user-check" size="2x" class="mr-2"></mdb-icon>
+            Login
+          </button>
+
+          <div class="col-7 text-center">
+            <!-- Social register -->
+            or sign up with:
+          </div>
+          <div class="w-100"></div>
+          <button mdbBtn color="deep-orange" class="waves-light col-md-6 darken-3" mdbWavesEffect (click)="signup()">
+            <mdb-icon fab icon="google" size="2x" class="mr-2"></mdb-icon>
+            Google
+          </button>
+          <button mdbBtn color="light-blue" class="waves-light col-md-6 darken-1" mdbWavesEffect (click)="signup()">
+            <mdb-icon fab icon="twitter" size="2x" class="mr-2"></mdb-icon>
+            Twitter
+          </button>
+          <button mdbBtn color="grey" class="waves-light col-md-6 darken-3" mdbWavesEffect (click)="signup()">
+            <mdb-icon fab icon="github" size="2x" class="mr-2"></mdb-icon>
+            Github
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -220,8 +243,16 @@
         <div class="flex-center loginError">{{signupError}}</div>
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="signup()">Sign up</button>
+        <button mdbBtn color="deep-orange" class="waves-light col-md-6" mdbWavesEffect (click)="signup()">
+          <mdb-icon fas icon="user-plus" size="2x" class="mr-2"></mdb-icon>
+          Sign up
+        </button>
+        <!-- Terms of service -->
+        <p>By clicking
+          <em>Sign up</em> you agree to our
+          <a href="" target="_blank">terms of service</a>. </p>
       </div>
     </div>
   </div>
 </div>
+

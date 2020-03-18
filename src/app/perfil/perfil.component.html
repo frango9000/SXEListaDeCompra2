@@ -86,4 +86,10 @@
       </button>
     </div>
   </div>
+
+  <div class="col-md-6">
+    <ul class="list-group" *ngIf="this.providers | async as providers">
+      <li class="list-group-item" *ngFor="let provider of providers">{{provider}}</li>
+    </ul>
+  </div>
 </div>

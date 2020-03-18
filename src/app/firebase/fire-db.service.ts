@@ -10,6 +10,7 @@ import {FireAuthService} from './fire-auth.service';
 })
 export class FireDbService {
 
+  idProductos: Observable<ProductoModel[] | null>;
   nextIndex: number;
 
   constructor(public angularFireDb: AngularFireDatabase,
@@ -29,8 +30,6 @@ export class FireDbService {
         this.idProductos = null;
       }
     });
-
-
   }
 
   productos: Observable<ProductoModel[]> = this.angularFireDb.list('productos').snapshotChanges().pipe(map(value => {
@@ -38,8 +37,6 @@ export class FireDbService {
       return new ProductoModel(+value1.key, '' + value1.payload.val());
     });
   }));
-
-  idProductos: Observable<ProductoModel[] | null>;
 
 
   agregarProducto(nombre: string) {

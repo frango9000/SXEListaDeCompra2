@@ -68,9 +68,9 @@ export class LoginDialogComponent implements OnInit {
       .catch(error => {
         console.log('Err: ', error);
         if (error.code === 'auth/account-exists-with-different-credential') {
-          let pendingCred = error.credential;
+          const pendingCred = error.credential;
           // The provider account's email address.
-          let email = error.email;
+          const email = error.email;
           this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(email).then(methods => {
             console.log('Methods: ', methods);
             if (methods[0] === 'password') {

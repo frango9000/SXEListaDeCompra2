@@ -8,8 +8,6 @@ import {FireDbService} from '../firebase/fire-db.service';
 })
 export class CarritoComponent implements OnInit {
 
-  removeResult = '';
-
   constructor(public fireDbService: FireDbService) {
   }
 

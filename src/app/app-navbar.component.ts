@@ -10,8 +10,8 @@ import {DialogService} from './dialogs/dialog.service';
     .cartbadge {
       font-size: 11px;
       background: #0600ff;
-      color: #fff;
-      padding: 1px 2.5px 1px 3px;
+      color: #000;
+      padding: 1px 3px 1px 3px;
       vertical-align: top;
       -webkit-border-radius: 9px;
       -moz-border-radius: 9px;

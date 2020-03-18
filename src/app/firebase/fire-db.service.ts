@@ -41,7 +41,7 @@ export class FireDbService {
 
   agregarProducto(nombre: string) {
     return this.angularFireDb.object('productos/' + this.nextIndex).set(nombre).then(value => {
-      this.incrementarProductosIndex();
+      return this.incrementarProductosIndex();
     });
   }
 

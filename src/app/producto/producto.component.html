@@ -24,8 +24,9 @@
       <hr>
       Siguiente id:
       <span class="badge badge-danger mr-2">{{fireDbService.nextIndex}}</span>
-      <input type="text" id="formAgregarProducto" class="form-control mb-4" placeholder="Nuevo Producto"
-             #inputNombreProducto>
+      <label for="formAgregarProducto"></label><input type="text" id="formAgregarProducto" class="form-control mb-4"
+                                                      placeholder="Nuevo Producto"
+                                                      #inputNombreProducto>
       <!-- Sign up button -->
       <button mdbBtn color="info" block="true" class="my-4" type="submit"
               (click)="agregarProducto(inputNombreProducto.value)">Agregar

@@ -60,7 +60,9 @@ export class SignupDialogComponent implements OnInit {
 
   signup() {
     if (!this.signupValidatingForm.invalid) {
-      return this.fireAuthService.register(this.signupFormModalEmail.value, this.signupFormModalName.value, this.signupFormModalPassword.value)
+      return this.fireAuthService.register(this.signupFormModalEmail.value,
+        this.signupFormModalName.value,
+        this.signupFormModalPassword.value)
         .then(result => {
           this.activeModal.close(result);
         })

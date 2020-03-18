@@ -15,7 +15,7 @@ export class PasswordDialogComponent implements OnInit {
   validatingForm: FormGroup;
 
   returnPass: true;
-  errorText: string = '';
+  errorText = '';
 
   constructor(public activeModal: NgbActiveModal,
               public fireAuth: FireAuthService) {

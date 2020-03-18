@@ -4,6 +4,9 @@
     
 # Lista de la Compra Angular Firebase
 
+
+# README EN CONSTRUCCION
+
 _Acá va un párrafo que describa lo que es el proyecto_
 
 ## Comenzando 🚀

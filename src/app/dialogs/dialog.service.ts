@@ -8,8 +8,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class DialogService {
 
   options = {
-    size: ' cascading-modal modal-avatar modal-sm',
-    windowClass: ''
+    size: ' cascading-modal modal-avatar modal-sm ',
+    windowClass: 'fade'
   };
 
   constructor(public modalService: NgbModal) {
@@ -18,6 +18,11 @@ export class DialogService {
   passwordDialog(email: string, name: string, url: string): Promise<boolean> {
     const modalRef = this.modalService.open(PasswordDialogComponent, this.options);
     modalRef.componentInstance.user = {email, name, url};
+    return modalRef.result;
+  }
+
+  loginDialog(): Promise<any> {
+    const modalRef = this.modalService.open(PasswordDialogComponent, this.options);
     return modalRef.result;
   }
 }

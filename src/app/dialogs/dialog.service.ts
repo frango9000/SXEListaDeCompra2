@@ -19,10 +19,7 @@ export class DialogService {
 
   passwordDialog(): Promise<string> {
     const modalRef = this.modalService.open(PasswordDialogComponent, this.passwordDialogOptions);
-    modalRef.componentInstance.return = {
-      pass: true,
-      reauth: false
-    };
+    modalRef.componentInstance.returnPass = true;
     return modalRef.result;
   }
 

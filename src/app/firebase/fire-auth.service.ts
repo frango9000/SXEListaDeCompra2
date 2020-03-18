@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-import {auth, User} from 'firebase';
+import {User} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +84,4 @@ export class FireAuthService {
     return this.angularFireAuth.auth.signOut();
   }
 
-  googleLogin() {
-    return this.angularFireAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-  }
 }

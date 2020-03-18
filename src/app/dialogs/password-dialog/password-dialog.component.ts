@@ -14,10 +14,7 @@ export class PasswordDialogComponent implements OnInit {
 
   validatingForm: FormGroup;
 
-  passwordDialogOptions = {
-    pass: false,
-    reauth: false
-  };
+  returnPass: true;
   errorText: string = '';
 
   constructor(public activeModal: NgbActiveModal,
@@ -32,7 +29,7 @@ export class PasswordDialogComponent implements OnInit {
 
   passBack() {
     if (!this.validatingForm.invalid) {
-      this.activeModal.close(this.passwordDialogOptions.pass ?? this.modalFormAvatarPassword.value);
+      this.activeModal.close(this.returnPass ? this.modalFormAvatarPassword.value : null);
     } else {
       this.errorText = 'Campos Erroneos';
     }

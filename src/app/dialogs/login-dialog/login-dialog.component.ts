@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FireAuthService} from '../../firebase/fire-auth.service';
 import {PasswordDialogComponent} from '../password-dialog/password-dialog.component';
+import {auth} from 'firebase';
+import AuthProvider = firebase.auth.AuthProvider;
 
 @Component({
   selector: 'app-login-dialog',
@@ -58,8 +60,8 @@ export class LoginDialogComponent implements OnInit {
     }
   }
 
-  googleLogin() {
-    return this.fireAuthService.googleLogin()
+  providerLogin(provider: AuthProvider) {
+    return this.fireAuthService.angularFireAuth.auth.signInWithPopup(provider)
       .then(value => {
         this.activeModal.close();
       })
@@ -83,15 +85,79 @@ export class LoginDialogComponent implements OnInit {
                 }).then(result => {
                   console.log('ReSult: ', result);
                   // Google account successfully linked to the existing Firebase user.
-                  // goToApp();
+                  this.activeModal.close();
                 });
-                return;
               });
             }
+            // All the other cases are external providers.
+            // Construct provider object for that provider.
+
+
+            const mainProvider = this.getProviderForProviderId(methods[0]);
+            // TODO:
+            // At this point, you should let the user know that they already has an account
+            // but with a different provider, and let them validate the fact they want to
+            // sign in with this provider.
+            // Sign in to provider. Note: browsers usually block popup triggered asynchronously,
+            // so in real scenario you should ask the user to click on a "continue" button
+            // that will trigger the signInWithPopup.
+            this.fireAuthService.angularFireAuth.auth.signInWithPopup(mainProvider).then(result => {
+              // Remember that the user may have signed in with an account that has a different email
+              // address than the first one. This can happen as Firebase doesn't control the provider's
+              // sign in flow and the user is free to login using whichever account they own.
+              // Step 4b.
+              // Link to Google credential.
+              // As we have access to the pending credential, we can directly call the link method.
+              result.user.linkWithCredential(pendingCred).then(usercred => {
+                console.log('FiNeRs: ', usercred);
+                // Google account successfully linked to the existing Firebase user.
+                this.activeModal.close();
+              });
+            }).catch(reason => {
+              console.log('FiNeRr: ', reason);
+            });
+
           });
         }
       });
   }
 
+  googleLogin() {
+    return this.providerLogin(new auth.GoogleAuthProvider());
+  }
+
+  facebookLogin() {
+    return this.providerLogin(new auth.FacebookAuthProvider());
+  }
+
+  twitterLogin() {
+    return this.providerLogin(new auth.TwitterAuthProvider());
+  }
+
+  githubLogin() {
+    return this.providerLogin(new auth.GithubAuthProvider());
+  }
+
+  getProviderForProviderId(prov: string) {
+    let authProvider = null;
+    switch (prov) {
+      case 'Facebook':
+        authProvider = new auth.FacebookAuthProvider();
+        break;
+      case 'Google':
+        authProvider = new auth.GoogleAuthProvider();
+        break;
+      case 'Twitter':
+        authProvider = new auth.TwitterAuthProvider();
+        break;
+      case 'Github':
+        authProvider = new auth.GithubAuthProvider();
+        break;
+    }
+    return authProvider;
+  }
+
 
 }
+
+

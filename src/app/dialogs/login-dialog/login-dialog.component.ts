@@ -141,16 +141,16 @@ export class LoginDialogComponent implements OnInit {
   getProviderForProviderId(prov: string) {
     let authProvider = null;
     switch (prov) {
-      case 'Facebook':
+      case 'facebook.com':
         authProvider = new auth.FacebookAuthProvider();
         break;
-      case 'Google':
+      case 'google.com':
         authProvider = new auth.GoogleAuthProvider();
         break;
-      case 'Twitter':
+      case 'twitter.com':
         authProvider = new auth.TwitterAuthProvider();
         break;
-      case 'Github':
+      case 'github.com':
         authProvider = new auth.GithubAuthProvider();
         break;
     }

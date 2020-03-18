@@ -28,7 +28,7 @@ export class PerfilComponent implements OnInit {
       passFormPass2: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswords.bind(this)])
     });
 
-    this.fireAuthService.user.subscribe(value => {
+    this.fireAuthService.authState.subscribe(value => {
       if (value) {
         this.providers = this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(value.email).then(value1 => {
           return value1;

@@ -18,7 +18,7 @@ export class FireDbService {
     angularFireDb.object<number>('productosIndex/index').valueChanges().subscribe(value => this.nextIndex = value);
 
 
-    this.fireAuthService.user.subscribe(value => {
+    this.fireAuthService.authState.subscribe(value => {
       if (value) {
         this.idProductos = this.angularFireDb.list('carritos/' + value.uid).snapshotChanges()
           .pipe(map(value1 => {
@@ -59,14 +59,14 @@ export class FireDbService {
   }
 
   eliminarProductoCarrito(id: number) {
-    if (this.fireAuthService.uid != null) {
-      return this.angularFireDb.object('carritos/' + this.fireAuthService.uid + '/' + id).remove();
+    if (this.fireAuthService.userDetails.uid != null) {
+      return this.angularFireDb.object('carritos/' + this.fireAuthService.userDetails.uid + '/' + id).remove();
     }
   }
 
   agregarProductoCarrito(id: number, nombre: string) {
-    if (this.fireAuthService.uid != null) {
-      return this.angularFireDb.object('carritos/' + this.fireAuthService.uid + '/' + id).set(nombre)
+    if (this.fireAuthService.userDetails.uid != null) {
+      return this.angularFireDb.object('carritos/' + this.fireAuthService.userDetails.uid + '/' + id).set(nombre)
         .then(value1 => console.log('insercion carrito OK: ', value1))
         .catch(reason => console.log('insercion carrito ERR: ', reason));
     }

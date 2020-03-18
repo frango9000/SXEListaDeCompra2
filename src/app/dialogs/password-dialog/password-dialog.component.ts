@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FireAuthService} from '../../firebase/fire-auth.service';
 
 @Component({
   selector: 'app-password-dialog',
@@ -13,7 +14,14 @@ export class PasswordDialogComponent implements OnInit {
 
   validatingForm: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal) {
+  passwordDialogOptions = {
+    pass: false,
+    reauth: false
+  };
+  errorText: string = '';
+
+  constructor(public activeModal: NgbActiveModal,
+              public fireAuth: FireAuthService) {
   }
 
   ngOnInit(): void {
@@ -23,7 +31,11 @@ export class PasswordDialogComponent implements OnInit {
   }
 
   passBack() {
-    this.activeModal.close(this.user);
+    if (!this.validatingForm.invalid) {
+      this.activeModal.close(this.passwordDialogOptions.pass ?? this.modalFormAvatarPassword.value);
+    } else {
+      this.errorText = 'Campos Erroneos';
+    }
   }
 
   get modalFormAvatarPassword() {

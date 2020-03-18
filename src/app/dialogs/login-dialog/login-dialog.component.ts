@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FireAuthService} from '../../firebase/fire-auth.service';
+import {PasswordDialogComponent} from '../password-dialog/password-dialog.component';
 
 @Component({
   selector: 'app-login-dialog',
@@ -11,10 +12,11 @@ import {FireAuthService} from '../../firebase/fire-auth.service';
 export class LoginDialogComponent implements OnInit {
 
   loginValidatingForm: FormGroup;
-  loginError = '';
+  errorText = '';
 
   constructor(public activeModal: NgbActiveModal,
-              public fireAuthService: FireAuthService) {
+              public fireAuthService: FireAuthService,
+              public modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class LoginDialogComponent implements OnInit {
   }
 
   login() {
-    this.loginError = '';
+    this.errorText = '';
     if (!this.loginValidatingForm.invalid) {
       return this.fireAuthService.login(this.loginFormModalEmail.value, this.loginFormModalPassword.value)
         .then(result => {
@@ -42,18 +44,53 @@ export class LoginDialogComponent implements OnInit {
         .catch(error => {
           console.log('Error iniciando sesion', error);
           if (error.code === 'auth/wrong-password') {
-            this.loginError = 'Contraseña no válida';
+            this.errorText = 'Contraseña no válida';
           } else if (error.code === 'auth/invalid-email') {
-            this.loginError = 'Formato email no válido';
+            this.errorText = 'Formato email no válido';
           } else if (error.code === 'auth/user-not-found') {
-            this.loginError = 'Usuario no registrado';
+            this.errorText = 'Usuario no registrado';
           } else {
-            this.loginError = error.code;
+            this.errorText = error.code;
           }
         });
     } else {
-      this.loginError = 'Campos Erroneos';
+      this.errorText = 'Campos Erroneos';
     }
+  }
+
+  googleLogin() {
+    return this.fireAuthService.googleLogin()
+      .then(value => {
+        this.activeModal.close();
+      })
+      .catch(error => {
+        console.log('Err: ', error);
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          let pendingCred = error.credential;
+          // The provider account's email address.
+          let email = error.email;
+          this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(email).then(methods => {
+            console.log('Methods: ', methods);
+            if (methods[0] === 'password') {
+              const modalRef = this.modalService.open(PasswordDialogComponent, {size: 'sm cascading-modal modal-avatar '});
+              modalRef.componentInstance.passwordDialogOptions.pass = true;
+              return modalRef.result.then(pass => {
+                console.log('PaSs: ', pass);
+                this.fireAuthService.angularFireAuth.auth.signInWithEmailAndPassword(email, pass).then(user => {
+                  console.log('UsEr: ', user);
+                  // Step 4a.
+                  return user.user.linkWithCredential(pendingCred);
+                }).then(result => {
+                  console.log('ReSult: ', result);
+                  // Google account successfully linked to the existing Firebase user.
+                  // goToApp();
+                });
+                return;
+              });
+            }
+          });
+        }
+      });
   }
 
 

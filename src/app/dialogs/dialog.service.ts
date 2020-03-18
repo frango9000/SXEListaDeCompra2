@@ -17,9 +17,12 @@ export class DialogService {
   constructor(public modalService: NgbModal) {
   }
 
-  passwordDialog(email: string, name: string, url: string): Promise<boolean> {
+  passwordDialog(): Promise<string> {
     const modalRef = this.modalService.open(PasswordDialogComponent, this.passwordDialogOptions);
-    modalRef.componentInstance.user = {email, name, url};
+    modalRef.componentInstance.return = {
+      pass: true,
+      reauth: false
+    };
     return modalRef.result;
   }
 

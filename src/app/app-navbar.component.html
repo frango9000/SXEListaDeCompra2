@@ -29,7 +29,7 @@
 
     <!-- Links Right-->
     <ul class="navbar-nav ml-auto">
-      <ng-container *ngIf="fireAuthService.user | async as user; else loggedOutButtons">
+      <ng-container *ngIf="fireAuthService.authState | async as user; else loggedOutButtons">
         <li class="nav-item">
           <a class="nav-link waves-light" mdbWavesEffect routerLink="/carrito">
             <mdb-icon fas icon="shopping-cart" size="2x"></mdb-icon>

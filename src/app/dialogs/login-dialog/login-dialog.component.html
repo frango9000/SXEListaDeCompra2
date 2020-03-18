@@ -37,7 +37,7 @@
       Input valid
     </mdb-success>
   </div>
-  <div class="flex-center loginError">{{loginError}}</div>
+  <div class="flex-center loginError">{{errorText}}</div>
 </div>
 
 <!--Footer-->
@@ -53,7 +53,7 @@
       or sign up with:
     </div>
     <div class="w-100"></div>
-    <button mdbBtn color="deep-orange" class="waves-light col-md-6 darken-3" mdbWavesEffect (click)="login()">
+    <button mdbBtn color="deep-orange" class="waves-light col-md-6 darken-3" mdbWavesEffect (click)="googleLogin()">
       <mdb-icon fab icon="google" size="2x" class="mr-2"></mdb-icon>
       Google
     </button>

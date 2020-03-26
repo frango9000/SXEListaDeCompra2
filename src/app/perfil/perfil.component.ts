@@ -76,7 +76,7 @@ export class PerfilComponent implements OnInit {
 
 
   editProfile() {
-    this.dialogService.confirmDialog('Save profile changes?', 'danger').subscribe(
+    this.dialogService.confirmDialog('Save profile changes?', 'warning').subscribe(
       () => {
         return this.fireAuthService.authState.toPromise().then(value1 => {
           value1.updateProfile({displayName: this.profileFormName.value, photoURL: this.profileFormAvatarUrl.value});
@@ -88,6 +88,22 @@ export class PerfilComponent implements OnInit {
   }
 
   changePassword() {
-
+    this.dialogService.confirmDialog('Change password??', 'danger').subscribe(
+      () => {
+        return this.fireAuthService.authState.subscribe(
+          value1 => {
+            value1.updatePassword(this.passFormPass1.value).then(value => {
+              console.log('success ', value);
+            }).catch(reason => {
+              console.log('er1 ', reason);
+            });
+          }, reason => {
+            console.log('er2 ', reason);
+          });
+      },
+      error => {
+        this.dialogService.infoDialog('Password change discarded', 'warning');
+      }
+    );
   }
 }

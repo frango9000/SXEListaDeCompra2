@@ -1,0 +1,37 @@
+<div class="modal-content">
+  <!--Header-->
+  <div class="modal-header">
+    <p class="heading">{{title}}
+    </p>
+
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="activeModal.hide()">
+      <span aria-hidden="true" class="white-text">&times;</span>
+    </button>
+  </div>
+
+  <!--Body-->
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="col-3">
+        <p></p>
+        <p class="text-center">
+          <mdb-icon fas icon="times" size="4x"></mdb-icon>
+        </p>
+      </div>
+
+      <div class="col-9">
+        <p>{{message}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <div class="modal-footer justify-content-center">
+    <a type="button" mdbBtn color="{{type}}" class="waves-effect" mdbWavesEffect
+       (click)="confirmation()">{{btnConfirm}}</a>
+    <a type="button" mdbBtn color="{{type}}" outline="true" class="waves-effect" mdbWavesEffect data-dismiss="modal"
+       (click)="activeModal.hide()">{{btnDeny}}</a>
+  </div>
+</div>
+<!--/.Content-->

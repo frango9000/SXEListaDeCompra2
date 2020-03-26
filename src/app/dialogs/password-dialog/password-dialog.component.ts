@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {FireAuthService} from '../../firebase/fire-auth.service';
+import {FireAuthService, UserDetails} from '../../firebase/fire-auth.service';
+import {Subject} from 'rxjs';
+import {MDBModalRef} from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-password-dialog',
@@ -10,14 +11,14 @@ import {FireAuthService} from '../../firebase/fire-auth.service';
 })
 export class PasswordDialogComponent implements OnInit {
 
-  @Input() public user;
+  action: Subject<any> = new Subject();
 
   validatingForm: FormGroup;
 
-  returnPass: true;
   errorText = '';
+  public actualUser: UserDetails;
 
-  constructor(public activeModal: NgbActiveModal,
+  constructor(public modalRef: MDBModalRef,
               public fireAuth: FireAuthService) {
   }
 
@@ -25,11 +26,13 @@ export class PasswordDialogComponent implements OnInit {
     this.validatingForm = new FormGroup({
       modalFormAvatarPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
+    this.fireAuth.userState.subscribe(value => this.actualUser = value);
   }
 
   passBack() {
     if (!this.validatingForm.invalid) {
-      this.activeModal.close(this.returnPass ? this.modalFormAvatarPassword.value : null);
+      this.action.next(this.modalFormAvatarPassword.value);
+      this.modalRef.hide();
     } else {
       this.errorText = 'Campos Erroneos';
     }

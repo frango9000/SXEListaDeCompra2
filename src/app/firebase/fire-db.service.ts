@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {ProductoModel} from '../producto/producto.model';
-import {map} from 'rxjs/operators';
+import {filter, map, switchMap, take, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {FireAuthService} from './fire-auth.service';
 
@@ -59,16 +59,24 @@ export class FireDbService {
   }
 
   eliminarProductoCarrito(id: number) {
-    if (this.fireAuthService.userDetails.uid != null) {
-      return this.angularFireDb.object('carritos/' + this.fireAuthService.userDetails.uid + '/' + id).remove();
-    }
+    return this.fireAuthService.userState.pipe(
+      take(1),
+      filter(user => user != null),
+      switchMap(user => user.uid),
+      tap(uid => this.angularFireDb.object('carritos/' + uid + '/' + id).remove())
+    ).subscribe();
   }
 
   agregarProductoCarrito(id: number, nombre: string) {
-    if (this.fireAuthService.userDetails.uid != null) {
-      return this.angularFireDb.object('carritos/' + this.fireAuthService.userDetails.uid + '/' + id).set(nombre)
-        .then(value1 => console.log('insercion carrito OK: ', value1))
-        .catch(reason => console.log('insercion carrito ERR: ', reason));
-    }
+    return this.fireAuthService.userState.pipe(
+      take(1),
+      filter(user => user != null),
+      switchMap(user => user.uid),
+      tap(uid => {
+        this.angularFireDb.object('carritos/' + uid + '/' + id).set(nombre)
+          .then(value1 => console.log('insercion carrito OK: ', value1))
+          .catch(reason => console.log('insercion carrito ERR: ', reason));
+      })
+    ).subscribe();
   }
 }

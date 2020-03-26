@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FireAuthService} from '../../firebase/fire-auth.service';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {MDBModalRef} from 'angular-bootstrap-md';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-signup-dialog',
@@ -10,10 +11,11 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class SignupDialogComponent implements OnInit {
 
+  action: Subject<any> = new Subject();
   signupValidatingForm: FormGroup;
   signupError = '';
 
-  constructor(public activeModal: NgbActiveModal,
+  constructor(public activeModal: MDBModalRef,
               public fireAuthService: FireAuthService) {
   }
 
@@ -64,7 +66,8 @@ export class SignupDialogComponent implements OnInit {
         this.signupFormModalName.value,
         this.signupFormModalPassword.value)
         .then(result => {
-          this.activeModal.close(result);
+          this.action.next(result);
+          this.activeModal.hide();
         })
         .catch(error => {
           console.log('Error creando usuario', error);

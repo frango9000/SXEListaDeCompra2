@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {FireAuthService} from '../firebase/fire-auth.service';
+import {DialogService} from '../dialogs/dialog.service';
+import {filter} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-perfil',
@@ -9,9 +12,8 @@ import {FireAuthService} from '../firebase/fire-auth.service';
 })
 export class PerfilComponent implements OnInit {
 
-  providers = null;
-
-  constructor(public fireAuthService: FireAuthService) {
+  constructor(public fireAuthService: FireAuthService,
+              public dialogService: DialogService) {
   }
 
   editProfileValidatingForm: FormGroup;
@@ -20,25 +22,22 @@ export class PerfilComponent implements OnInit {
   ngOnInit(): void {
     this.editProfileValidatingForm = new FormGroup({
       profileFormName: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      profileFormEmail: new FormControl('', [Validators.required, Validators.minLength(5), Validators.email]),
+      profileFormAvatarUrl: new FormControl(''),
     });
     this.editPassValidatingForm = new FormGroup({
       passFormOld: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passFormPass1: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswordsTrigger.bind(this)]),
       passFormPass2: new FormControl('', [Validators.required, Validators.minLength(6), this.checkPasswords.bind(this)])
     });
-
-    this.fireAuthService.authState.subscribe(value => {
-      if (value) {
-        this.providers = this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(value.email).then(value1 => {
-          return value1;
-        });
-      } else {
-        this.providers = null;
-      }
-    });
+    this.setUsernameAndPhotoUrslFields();
   }
 
+  setUsernameAndPhotoUrslFields() {
+    this.fireAuthService.userState.pipe(filter(value => value != null)).subscribe(actualUser => {
+      this.profileFormName.setValue(actualUser.displayName);
+      this.profileFormAvatarUrl.setValue(actualUser.photoURL);
+    });
+  }
 
   checkPasswordsTrigger(control: FormControl) {
     if (this.editPassValidatingForm) {
@@ -54,12 +53,13 @@ export class PerfilComponent implements OnInit {
     return null;
   }
 
-  get profileFormEmail() {
-    return this.editProfileValidatingForm.get('profileFormEmail');
-  }
 
   get profileFormName() {
     return this.editProfileValidatingForm.get('profileFormName');
+  }
+
+  get profileFormAvatarUrl() {
+    return this.editProfileValidatingForm.get('profileFormAvatarUrl');
   }
 
   get passFormOld() {
@@ -76,7 +76,15 @@ export class PerfilComponent implements OnInit {
 
 
   editProfile() {
-
+    this.dialogService.confirmDialog('Save profile changes?', 'danger').subscribe(
+      () => {
+        return this.fireAuthService.authState.toPromise().then(value1 => {
+          value1.updateProfile({displayName: this.profileFormName.value, photoURL: this.profileFormAvatarUrl.value});
+        });
+      },
+      error => {
+        this.dialogService.infoDialog('Changes Discarded', 'warning');
+      });
   }
 
   changePassword() {

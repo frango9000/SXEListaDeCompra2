@@ -37,10 +37,11 @@ export class AppNavbarComponent implements OnInit {
 
 
   test() {
-    this.dialogService.passwordDialog().then(value => {
-      console.log('passwordDialog then ', value);
-    }).catch(reason => {
-      console.log('passwordDialog err ', reason);
-    });
+    // this.dialogService.passwordDialog().subscribe()
+    //   .then(value => {
+    //   console.log('passwordDialog then ', value);
+    // }).catch(reason => {
+    //   console.log('passwordDialog err ', reason);
+    // });
   }
 }

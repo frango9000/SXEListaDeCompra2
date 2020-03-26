@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FireAuthService} from '../../firebase/fire-auth.service';
-import {PasswordDialogComponent} from '../password-dialog/password-dialog.component';
 import {auth} from 'firebase';
+import {MDBModalRef} from 'angular-bootstrap-md';
+import {Subject} from 'rxjs';
 import AuthProvider = firebase.auth.AuthProvider;
+
 
 @Component({
   selector: 'app-login-dialog',
@@ -13,12 +14,13 @@ import AuthProvider = firebase.auth.AuthProvider;
 })
 export class LoginDialogComponent implements OnInit {
 
+  action: Subject<any> = new Subject();
   loginValidatingForm: FormGroup;
   errorText = '';
 
-  constructor(public activeModal: NgbActiveModal,
+  constructor(public activeModal: MDBModalRef,
               public fireAuthService: FireAuthService,
-              public modalService: NgbModal) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -41,7 +43,8 @@ export class LoginDialogComponent implements OnInit {
     if (!this.loginValidatingForm.invalid) {
       return this.fireAuthService.login(this.loginFormModalEmail.value, this.loginFormModalPassword.value)
         .then(result => {
-          this.activeModal.close(result);
+          this.action.next(result);
+          this.activeModal.hide();
         })
         .catch(error => {
           console.log('Error iniciando sesion', error);
@@ -63,7 +66,7 @@ export class LoginDialogComponent implements OnInit {
   providerLogin(provider: AuthProvider) {
     return this.fireAuthService.angularFireAuth.auth.signInWithPopup(provider)
       .then(value => {
-        this.activeModal.close();
+        this.activeModal.hide();
       })
       .catch(error => {
         console.log('Err: ', error);
@@ -74,20 +77,20 @@ export class LoginDialogComponent implements OnInit {
           this.fireAuthService.angularFireAuth.auth.fetchSignInMethodsForEmail(email).then(methods => {
             console.log('Methods: ', methods);
             if (methods[0] === 'password') {
-              const modalRef = this.modalService.open(PasswordDialogComponent, {size: 'sm cascading-modal modal-avatar '});
-              modalRef.componentInstance.passwordDialogOptions.pass = true;
-              return modalRef.result.then(pass => {
-                console.log('PaSs: ', pass);
-                this.fireAuthService.angularFireAuth.auth.signInWithEmailAndPassword(email, pass).then(user => {
-                  console.log('UsEr: ', user);
-                  // Step 4a.
-                  return user.user.linkWithCredential(pendingCred);
-                }).then(result => {
-                  console.log('ReSult: ', result);
-                  // Google account successfully linked to the existing Firebase user.
-                  this.activeModal.close();
-                });
-              });
+              // const modalRef = this.modalService.open(PasswordDialogComponent, {size: 'sm cascading-modal modal-avatar '});
+              // modalRef.componentInstance.returnPass = true;
+              // return modalRef.result.then(pass => {
+              //   console.log('PaSs: ', pass);
+              //   this.fireAuthService.angularFireAuth.auth.signInWithEmailAndPassword(email, pass).then(user => {
+              //     console.log('UsEr: ', user);
+              //     // Step 4a.
+              //     return user.user.linkWithCredential(pendingCred);
+              //   }).then(result => {
+              //     console.log('ReSult: ', result);
+              //     // Google account successfully linked to the existing Firebase user.
+              //     this.activeModal.hide();
+              //   });
+              // });
             }
             // All the other cases are external providers.
             // Construct provider object for that provider.
@@ -111,7 +114,7 @@ export class LoginDialogComponent implements OnInit {
               result.user.linkWithCredential(pendingCred).then(usercred => {
                 console.log('FiNeRs: ', usercred);
                 // Google account successfully linked to the existing Firebase user.
-                this.activeModal.close();
+                this.activeModal.hide();
               });
             }).catch(reason => {
               console.log('FiNeRr: ', reason);

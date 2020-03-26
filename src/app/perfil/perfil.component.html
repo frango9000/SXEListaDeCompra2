@@ -1,41 +1,79 @@
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html" *ngIf="fireAuthService.userState | async as userDetails">
 
   <div class="col-md-6">
+    <div class="modal-header">
+      <div class="modal-title">
+        Account Details
+      </div>
+    </div>
+    <div class="md-form mb-3">
+      <mdb-icon *ngIf="userDetails.emailVerified; else notVerified" fas icon="check-circle"
+                class="prefix grey-text"></mdb-icon>
+      <ng-template #notVerified>
+        <mdb-icon *ngIf="userDetails.emailVerified" fas icon="times-circle" class="prefix grey-text"></mdb-icon>
+      </ng-template>
+      <input type="email" id="profileFormEmail" [disabled]="true" class="form-control"
+             value="{{userDetails.email}}" mdbInput>
+
+      <label for="profileFormEmail">Your email</label>
+    </div>
+    <div class="md-form mb-3">
+      <mdb-icon fas icon="id-badge" class="prefix grey-text"></mdb-icon>
+      <input type="text" id="profileFormUid" [disabled]="true" class="form-control"
+             value="{{userDetails.uid}}" mdbInput>
+      <label for="profileFormUid">Your uid:</label>
+    </div>
+    <div class="md-form mb-3">
+      <mdb-icon fas icon="id-badge" class="prefix grey-text"></mdb-icon>
+      <input type="text" id="profileFormCreationTime" [disabled]="true" class="form-control"
+             value="{{userDetails.creationTime}}" mdbInput>
+      <label for="profileFormCreationTime">Join date:</label>
+    </div>
+    <div class="md-form mb-3">
+      <mdb-icon fas icon="id-badge" class="prefix grey-text"></mdb-icon>
+      <input type="text" id="profileFormLastSignIn" [disabled]="true" class="form-control"
+             value="{{userDetails.lastSignInTime}}" mdbInput>
+      <label for="profileFormLastSignIn">Last log in:</label>
+    </div>
     <div class="md-form mb-5">
-      <mdb-icon fas icon="at" class="prefix grey-text"></mdb-icon>
-      <input type="email" id="profileFormEmailId" [formControl]="profileFormEmail" class="form-control"
-             mdbInput mdbValidate>
-      <label for="profileFormEmailId">Your email</label>
-      <mdb-error
-        *ngIf="profileFormEmail.invalid && (profileFormEmail.dirty || profileFormEmail.touched)">
-        Input invalid
-      </mdb-error>
-      <mdb-success
-        *ngIf="profileFormEmail.valid && (profileFormEmail.dirty || profileFormEmail.touched)">Input
-        valid
-      </mdb-success>
+      <mdb-icon fas icon="id-badge" class="prefix grey-text"></mdb-icon>
+      <input type="text" id="profileFormProviderId" [disabled]="true" class="form-control"
+             value="{{userDetails.providerId}}" mdbInput>
+      <label for="profileFormProviderId">Provider Id:</label>
+    </div>
+    <div class="modal-footer "></div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="modal-header">
+      <div class="modal-title">
+        User Profile
+      </div>
     </div>
     <div class="md-form mb-5">
       <mdb-icon fas icon="user-tag" class="prefix grey-text"></mdb-icon>
-      <input type="email" id="profileFormNameId" [formControl]="profileFormName" class="form-control"
-             mdbInput mdbValidate>
+      <input type="text" id="profileFormNameId" [formControl]="profileFormName" class="form-control"
+             mdbInput>
       <label for="profileFormNameId">Your name</label>
-      <mdb-error
-        *ngIf="profileFormName.invalid && (profileFormName.dirty || profileFormName.touched)">
-        Input invalid
-      </mdb-error>
-      <mdb-success
-        *ngIf="profileFormName.valid && (profileFormName.dirty || profileFormName.touched)">Input
-        valid
-      </mdb-success>
+    </div>
+    <div class="md-form mb-5">
+      <mdb-icon fas icon="user-tag" class="prefix grey-text"></mdb-icon>
+      <input type="text" id="profileFormAvatarUrl" [formControl]="profileFormAvatarUrl" class="form-control"
+             mdbInput>
+      <label for="profileFormAvatarUrl">Your avatar</label>
     </div>
     <div class="modal-footer d-flex justify-content-center">
-      <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="editProfile()">Guardar Cambios
+      <button mdbBtn color="deep-orange" class="waves-light" mdbWavesEffect (click)="editProfile()">Cambiar Nombre
       </button>
     </div>
   </div>
 
   <div class="col-md-6">
+    <div class="modal-header">
+      <div class="modal-title">
+        Change Password
+      </div>
+    </div>
     <div class="md-form mb-5">
       <mdb-icon fas icon="unlock" class="prefix grey-text"></mdb-icon>
       <input type="password" id="passFormOldId" [formControl]="passFormOld" class="form-control"
@@ -87,9 +125,48 @@
     </div>
   </div>
 
+
   <div class="col-md-6">
-    <ul class="list-group" *ngIf="this.providers | async as providers">
-      <li class="list-group-item" *ngFor="let provider of providers">{{provider}}</li>
+    <div class="modal-header">
+      <div class="modal-title">
+        Auth Providers
+      </div>
+    </div>
+    <ng-template #noProvider> No Providers</ng-template>
+    <ul class="list-group" *ngIf="userDetails.providerData as providers else noProvider">
+      <li class="list-group-item" *ngFor="let provider of providers ">
+        <div class="" [ngSwitch]="provider.providerId">
+          <div class="" *ngSwitchCase="'google.com'">
+            <button mdbBtn color="primary" class="waves-light" type="button" (click)="defaultAuthExpand.toggle()"
+                    mdbWavesEffect>
+              <mdb-icon fab icon="google" size="2x" class="mr-2"></mdb-icon>
+              Google
+            </button>
+          </div>
+          <div class="" *ngSwitchCase="'github.com'">
+            <button mdbBtn color="primary" class="waves-light" type="button" (click)="defaultAuthExpand.toggle()"
+                    mdbWavesEffect>
+              <mdb-icon fab icon="github" size="2x" class="mr-2"></mdb-icon>
+              Github
+            </button>
+          </div>
+          <div *ngSwitchDefault>
+            <button mdbBtn color="primary" class="waves-light" type="button" (click)="defaultAuthExpand.toggle()"
+                    mdbWavesEffect>
+              {{provider.providerId}}
+            </button>
+          </div>
+          <div class="" mdbCollapse #defaultAuthExpand="bs-collapse">
+            {{provider.providerId}}<br>
+            {{provider.uid}}<br>
+            {{provider.photoURL}}<br>
+            {{provider.email}}<br>
+            {{provider.displayName}}<br>
+            {{provider.phoneNumber}}<br>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
+
 </div>

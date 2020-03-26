@@ -17,9 +17,11 @@ import {environment} from '../environments/environment';
 import {AppNavbarComponent} from './app-navbar.component';
 import {AppFooterComponent} from './app-footer.component';
 import {PasswordDialogComponent} from './dialogs/password-dialog/password-dialog.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LoginDialogComponent} from './dialogs/login-dialog/login-dialog.component';
 import {SignupDialogComponent} from './dialogs/signup-dialog/signup-dialog.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ConfirmDialogComponent} from './dialogs/confirm-dialog/confirm-dialog.component';
+import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,14 @@ import {SignupDialogComponent} from './dialogs/signup-dialog/signup-dialog.compo
     PasswordDialogComponent,
     LoginDialogComponent,
     SignupDialogComponent,
+    ConfirmDialogComponent,
+    InfoDialogComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
-    NgbModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,

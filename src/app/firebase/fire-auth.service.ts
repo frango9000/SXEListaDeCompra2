@@ -1,58 +1,39 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {User} from 'firebase';
+import {tap} from 'rxjs/operators';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {User, UserInfo} from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FireAuthService {
 
-  userDetails = {
-    uid: null,
-    displayName: null,
-    email: null,
-    emailVerified: null,
-    isAnonymous: null,
-    creationTime: null,
-    lastSignInTime: null,
-    photoURL: null,
-    providerId: null,
-    providerData: null,
-  };
-
   constructor(public angularFireAuth: AngularFireAuth) {
   }
 
-  authState: Observable<User | null> = this.angularFireAuth.authState.pipe(map(authState => {
-    // console.log('authState: ', authState);
-    if (authState) {
-      this.userDetails.uid = authState.uid;
-      this.userDetails.displayName = authState.displayName;
-      this.userDetails.email = authState.email;
-      this.userDetails.emailVerified = authState.emailVerified;
-      this.userDetails.isAnonymous = authState.isAnonymous;
-      this.userDetails.creationTime = authState.metadata.creationTime;
-      this.userDetails.lastSignInTime = authState.metadata.lastSignInTime;
-      this.userDetails.photoURL = authState.photoURL;
-      this.userDetails.providerId = authState.providerId;
-      this.userDetails.providerData = authState.providerData;
-      return authState;
-    } else {
-      this.userDetails.uid = null;
-      this.userDetails.displayName = null;
-      this.userDetails.email = null;
-      this.userDetails.emailVerified = null;
-      this.userDetails.isAnonymous = null;
-      this.userDetails.creationTime = null;
-      this.userDetails.lastSignInTime = null;
-      this.userDetails.photoURL = null;
-      this.userDetails.providerId = null;
-      this.userDetails.providerData = null;
-      return null;
-    }
-  }));
+  userState: BehaviorSubject<UserDetails | null> = new BehaviorSubject<UserDetails | null>(null);
+
+  authState: Observable<User | null> = this.angularFireAuth.authState.pipe(
+    tap(authState => {
+      if (authState) {
+        this.userState.next({
+          uid: authState.uid,
+          displayName: authState.displayName,
+          email: authState.email,
+          emailVerified: authState.emailVerified,
+          isAnonymous: authState.isAnonymous,
+          creationTime: authState.metadata.creationTime,
+          lastSignInTime: authState.metadata.lastSignInTime,
+          photoURL: authState.photoURL,
+          providerId: authState.providerId,
+          providerData: authState.providerData,
+        });
+      } else {
+        this.userState.next(null);
+      }
+    })
+  );
 
 
   register(email: string, name: string, pass: string) {
@@ -84,4 +65,17 @@ export class FireAuthService {
     return this.angularFireAuth.auth.signOut();
   }
 
+}
+
+export interface UserDetails {
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+  emailVerified: boolean;
+  isAnonymous: boolean;
+  creationTime: string | undefined;
+  lastSignInTime: string | undefined;
+  photoURL: string | null;
+  providerId: string;
+  providerData: (UserInfo | null)[];
 }

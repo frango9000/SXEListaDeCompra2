@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FireAuthService} from './firebase/fire-auth.service';
-import {FireDbService} from './firebase/fire-db.service';
 import {DialogService} from './dialogs/dialog.service';
+import {CarritoService} from './core/carrito.service';
 
 @Component({
   selector: 'app-app-navbar',
@@ -23,7 +23,7 @@ import {DialogService} from './dialogs/dialog.service';
 export class AppNavbarComponent implements OnInit {
 
   constructor(public fireAuthService: FireAuthService,
-              public fireDbService: FireDbService,
+              public carritoService: CarritoService,
               public dialogService: DialogService) {
   }
 
@@ -37,11 +37,5 @@ export class AppNavbarComponent implements OnInit {
 
 
   test() {
-    // this.dialogService.passwordDialog().subscribe()
-    //   .then(value => {
-    //   console.log('passwordDialog then ', value);
-    // }).catch(reason => {
-    //   console.log('passwordDialog err ', reason);
-    // });
   }
 }

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Producto, ProductoService} from '../producto/producto.service';
+import {Producto, ProductoService} from '../core/producto.service';
+import {CarritoService} from '../core/carrito.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -8,7 +9,8 @@ import {Producto, ProductoService} from '../producto/producto.service';
 })
 export class CatalogoComponent implements OnInit {
 
-  constructor(public productService: ProductoService) {
+  constructor(public productoService: ProductoService,
+              public carritoService: CarritoService) {
   }
 
   ngOnInit(): void {
@@ -16,7 +18,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   agregarProductoAlCarrito(producto: Producto) {
-    return this.productService.agregarProductoCarrito(producto);
+    return this.carritoService.deltaCantidad(producto.id, 1);
   }
 
 }

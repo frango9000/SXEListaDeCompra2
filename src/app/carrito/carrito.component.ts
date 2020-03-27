@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FireDbService} from '../firebase/fire-db.service';
+import {CarritoService} from '../core/carrito.service';
 
 @Component({
   selector: 'app-carrito',
@@ -8,13 +8,23 @@ import {FireDbService} from '../firebase/fire-db.service';
 })
 export class CarritoComponent implements OnInit {
 
-  constructor(public fireDbService: FireDbService) {
+  constructor(public carritoService: CarritoService) {
   }
 
   ngOnInit(): void {
   }
 
-  eliminarProducto(id: number) {
-    // return this.fireDbService.eliminarProductoCarrito(id);
+  incrementarProducto(id: string) {
+
+    // return this.productService.incrementarProducto(id);
+  }
+
+  reducirProducto(id: string) {
+
+    // return this.productService.reducirProducto(id);
+  }
+
+  eliminarProducto(id: string) {
+    return this.carritoService.eliminarProductoCarrito(id);
   }
 }

@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
         <ul class="list-group mb-2">
-          <li *ngFor="let producto of productoService.products | async" class="list-group-item">
+          <li *ngFor="let producto of productoService.productsList | async" class="list-group-item">
             <div class="row">
               <div class="col-5">
                 {{producto.nombre}}

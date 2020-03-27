@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CatalogoComponent} from './catalogo/catalogo.component';
 import {CarritoComponent} from './carrito/carrito.component';
 import {HomeComponent} from './home/home.component';
@@ -22,6 +22,7 @@ import {SignupDialogComponent} from './dialogs/signup-dialog/signup-dialog.compo
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfirmDialogComponent} from './dialogs/confirm-dialog/confirm-dialog.component';
 import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
+import {ProductoDetailComponent} from './producto/producto-detail/producto-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
     SignupDialogComponent,
     ConfirmDialogComponent,
     InfoDialogComponent,
+    ProductoDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,8 @@ import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

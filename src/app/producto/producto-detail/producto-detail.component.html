@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <p class="h4">{{title}}</p>
+</div>
+<div class="modal-body">
+  <div class="md-form mb-2 ">
+    <input type="text" id="formAgregarProductoId" [disabled]="true" class="form-control" mdbInput
+           [(ngModel)]="this.product.id" #formAgregarProductoId>
+    <label for="formAgregarProductoId">Id</label>
+  </div>
+  <div class="md-form mb-2 ">
+    <input type="text" id="formAgregarProductoNombre" class="form-control" mdbInput [(ngModel)]="this.product.nombre"
+           #formAgregarProductoNombre>
+    <label for="formAgregarProductoNombre">Nombre</label>
+  </div>
+  <div class="md-form mb-2">
+    <input type="text" id="formAgregarProductoPhotoUrl" class="form-control" mdbInput
+           [(ngModel)]="this.product.photoUrl"
+           #formAgregarProductoPhotoUrl>
+    <label for="formAgregarProductoPhotoUrl">Photo Url</label>
+  </div>
+  <div class="md-form mb-2">
+    <input type="text" id="formAgregarProductoDescripcion" class="form-control" mdbInput
+           [(ngModel)]="this.product.descripcion"
+           #formAgregarProductoDescripcion>
+    <label for="formAgregarProductoDescripcion">Descripcion</label>
+  </div>
+  <div class="md-form mb-2">
+    <input type="text" id="formAgregarProductoCategoria" class="form-control" mdbInput
+           [(ngModel)]="this.product.categoria"
+           #formAgregarProductoCategoria>
+    <label for="formAgregarProductoCategoria">Categoria</label>
+  </div>
+  <div class="md-form mb-2">
+    <input type="text" id="formAgregarProductoPrecio" class="form-control" mdbInput [(ngModel)]="this.product.precio"
+           #formAgregarProductoPrecio>
+    <label for="formAgregarProductoPrecio">Precio</label>
+  </div>
+</div>
+<div class="modal-footer">
+  <button *ngIf="!edit; else editButton" mdbBtn color="info" block="true" class="my-4" type="submit"
+          (click)="insertarProducto()">
+    Agregar
+  </button>
+  <ng-template #editButton>
+    <button mdbBtn color="info" block="true" class="my-4" type="submit"
+            (click)="editarProducto()">
+      Editar
+    </button>
+  </ng-template>
+  <p>{{insertResult}}</p>
+</div>

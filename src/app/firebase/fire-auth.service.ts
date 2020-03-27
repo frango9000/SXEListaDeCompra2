@@ -18,6 +18,7 @@ export class FireAuthService {
     tap(authState => {
       if (authState) {
         this.userState.next({
+          authState,
           uid: authState.uid,
           displayName: authState.displayName,
           email: authState.email,
@@ -68,6 +69,7 @@ export class FireAuthService {
 }
 
 export interface UserDetails {
+  authState: User;
   uid: string;
   displayName: string | null;
   email: string | null;

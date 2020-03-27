@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FireAuthService} from '../firebase/fire-auth.service';
 import {FireDbService} from '../firebase/fire-db.service';
+import {Producto, ProductoService} from './producto.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-producto',
@@ -8,29 +10,27 @@ import {FireDbService} from '../firebase/fire-db.service';
   styleUrls: ['./producto.component.scss']
 })
 export class ProductoComponent implements OnInit {
+  private removeResult: string = '';
 
-  insertResult = '';
+  selectedProducto: Subject<Producto | null> = new Subject<Producto | null>();
 
   constructor(private fireAuthService: FireAuthService,
+              public productoService: ProductoService,
               public fireDbService: FireDbService) {
   }
 
   ngOnInit(): void {
+    this.selectedProducto.next(null);
   }
 
-  agregarProducto(value: string) {
-    if (value.trim().length > 0) {
-      return this.fireDbService.agregarProducto(value).then(_ => {
-        this.insertResult = 'Insercion realizada';
-      });
-    }
+  editarProducto(producto) {
+    this.selectedProducto.next(producto);
   }
 
 
-  eliminarProducto(id: number) {
-    return this.fireDbService.eliminarProducto(id).then(_ => {
-      this.insertResult = 'Producto Eliminado';
+  eliminarProducto(producto) {
+    return this.productoService.eliminarProducto(producto).then(_ => {
+      this.removeResult = 'Producto Eliminado';
     });
-
   }
 }

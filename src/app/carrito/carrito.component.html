@@ -1,15 +1,75 @@
-<div class="col-md-10">
-
+<div class="col-md-12" *ngIf="this.fireAuthService.userState | async; else logInMsg">
   <p class="h4 mb-4">Tu Carrito</p>
-
   <ul class="list-group">
-    <li class="list-group-item d-flex "
-        *ngFor="let producto of carritoService.productsCart | async">
-      <button type="button" class="close mr-2" aria-label="Close" (click)="eliminarProducto(producto.id)">
-        <mdb-icon fas icon="trash-alt"></mdb-icon>
-      </button>
-      <mdb-badge pill="true" primary="true" style="width: 50px" class="mr-2">{{producto.cantidad}}</mdb-badge>
-      {{producto.id}}
+    <li class="list-group-item d-flex" *ngFor="let productoCarrito of carritoService.productsCart | async">
+      <div *ngIf="productoCarrito | cartToProduct | async as producto">
+        <mdb-card>
+          <!--Card content-->
+          <mdb-card-body>
+            <!--Title-->
+            <div class="row">
+              <div class="col-2 view rgba-white-slight product-thmb-container ">
+                <label title="{{producto.id}}"><img
+                  appImgFallback="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
+                  class="img-fluid" src="{{producto.photoUrl}}" alt="{{producto.id}}-image"/>
+                </label>
+              </div>
+
+              <!--Text-->
+              <div class="col-3">
+                <mdb-card-text class="w-100">
+                  <mdb-badge *ngIf="producto.categoria" class="category-pill" pill="true" primary="true">
+                    {{producto.categoria}}
+                  </mdb-badge>
+                  <h6>{{producto.nombre}}</h6>
+                </mdb-card-text>
+              </div>
+              <div class="col-1 text-nowrap">
+                {{(producto.precio ? producto.precio : 0) | currency}}
+              </div>
+              <div class="col-1">
+                <button mdbBtn color="blue" class="waves-light col-md-6 darken-3" mdbWavesEffect
+                        (click)="reducirProducto(productoCarrito.id)">
+                  <mdb-icon fas icon="minus" size="md"></mdb-icon>
+                </button>
+              </div>
+              <div class="col-1">
+                <button mdbBtn color="blue" class="waves-light col-md-6 darken-3 text-nowrap" mdbWavesEffect>
+                  {{productoCarrito.cantidad}}
+                </button>
+              </div>
+              <div class="col-1">
+                <button mdbBtn color="blue" class="waves-light col-md-6 darken-3" mdbWavesEffect
+                        (click)="incrementarProducto(productoCarrito.id)">
+                  <mdb-icon fas icon="plus" size="md"></mdb-icon>
+                </button>
+              </div>
+              <div class="col-1">
+                <button mdbBtn color="blue" class="waves-light col-md-6 darken-3 mr-1" mdbWavesEffect
+                        (click)="eliminarProducto(productoCarrito.id)">
+                  <mdb-icon fas icon="trash-alt" size="md"></mdb-icon>
+                </button>
+              </div>
+              <div class="col-1 ">
+                <div class="ml-2 text-nowrap w-100 text-right">
+                  {{((producto.precio ? producto.precio : 0) * productoCarrito.cantidad)|currency}}
+                </div>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+        <!-- Card -->
+      </div>
     </li>
   </ul>
 </div>
+<ng-template #logInMsg>
+  <div class="col-12 text-center">
+
+    <button type="button" class="btn btn-primary waves-light mt-4 mb-4" mdbWavesEffect
+            data-toggle="modal" data-target="#basicExample" (click)="dialogService.loginDialog()">
+      <mdb-icon fas icon="sign-in-alt" size="md"></mdb-icon>
+      To see you cart you must log in.
+    </button>
+  </div>
+</ng-template>

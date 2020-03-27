@@ -51,6 +51,27 @@ export class CarritoService {
 
   }
 
+  /*
+    eliminarProductoCarrito(id: number) {
+    return this.fireAuthService.userState.pipe(
+      take(1),
+      filter(user => user != null),
+      switchMap(user => user.uid),
+      tap(uid => this.angularFireDb.object('carritos/' + uid + '/' + id).remove())
+    ).subscribe();
+  }
+  */
+  eliminarProductoCarrito(id: string) {
+    this.fireAuthService.userState.pipe(
+      take(1),
+      filter(userDetails => userDetails != null),
+      tap(user => {
+        return this.angularFireDb.object(this.cartsPath + user.uid + '/' + id).remove();
+      })
+    ).subscribe();
+  }
+
+
   deltaCantidad(id: string, cantidad: number) {
     this.fireAuthService.userState.pipe(
       take(1),
@@ -60,7 +81,6 @@ export class CarritoService {
           take(1),
         ).subscribe(
           value => {
-            console.log('valor actual: ', value);
             const newValue = (+value + cantidad);
             if (newValue > 0) {
               return this.angularFireDb.object(this.cartsPath + user.uid + '/' + id).set(newValue);
@@ -72,7 +92,6 @@ export class CarritoService {
       })
     ).subscribe();
   }
-
 
   /*
   agregarProductoCarrito(id: number, nombre: string) {
@@ -88,20 +107,6 @@ export class CarritoService {
     ).subscribe();
   }
    */
-
-  /*
-    eliminarProductoCarrito(id: number) {
-    return this.fireAuthService.userState.pipe(
-      take(1),
-      filter(user => user != null),
-      switchMap(user => user.uid),
-      tap(uid => this.angularFireDb.object('carritos/' + uid + '/' + id).remove())
-    ).subscribe();
-  }
-  */
-  eliminarProductoCarrito(id: string) {
-
-  }
 
 
 }

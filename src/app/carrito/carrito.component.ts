@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CarritoService} from '../core/carrito.service';
+import {FireAuthService} from '../firebase/fire-auth.service';
+import {DialogService} from '../dialogs/dialog.service';
 
 @Component({
   selector: 'app-carrito',
@@ -8,20 +10,20 @@ import {CarritoService} from '../core/carrito.service';
 })
 export class CarritoComponent implements OnInit {
 
-  constructor(public carritoService: CarritoService) {
+  constructor(public carritoService: CarritoService,
+              public fireAuthService: FireAuthService,
+              public dialogService: DialogService) {
   }
 
   ngOnInit(): void {
   }
 
   incrementarProducto(id: string) {
-
-    // return this.productService.incrementarProducto(id);
+    return this.carritoService.deltaCantidad(id, 1);
   }
 
   reducirProducto(id: string) {
-
-    // return this.productService.reducirProducto(id);
+    return this.carritoService.deltaCantidad(id, -1);
   }
 
   eliminarProducto(id: string) {

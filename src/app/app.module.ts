@@ -24,6 +24,7 @@ import {ConfirmDialogComponent} from './dialogs/confirm-dialog/confirm-dialog.co
 import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
 import {ProductoDetailComponent} from './producto/producto-detail/producto-detail.component';
 import {ImgFallbackDirective} from './core/img-fallback.directive';
+import {CartToProductPipe} from './core/cart-to-product.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {ImgFallbackDirective} from './core/img-fallback.directive';
     InfoDialogComponent,
     ProductoDetailComponent,
     ImgFallbackDirective,
+    CartToProductPipe,
   ],
   imports: [
     BrowserModule,

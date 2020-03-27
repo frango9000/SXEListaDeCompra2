@@ -11,7 +11,7 @@ export class ProductoService {
   productsRef = this.angularFireDb.database.ref(this.productsPath);
 
   private productsMap: Map<string, Producto> = new Map();
-  private products: BehaviorSubject<Map<string, Producto>> = new BehaviorSubject<Map<string, Producto>>(this.productsMap);
+  products: BehaviorSubject<Map<string, Producto>> = new BehaviorSubject<Map<string, Producto>>(this.productsMap);
 
   productsList: Observable<Producto[]> = this.products.pipe(map(value => Array.from(value.values())));
 

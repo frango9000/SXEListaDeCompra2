@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ConfirmDialogComponent} from './dialogs/confirm-dialog/confirm-dialog.component';
 import {InfoDialogComponent} from './dialogs/info-dialog/info-dialog.component';
 import {ProductoDetailComponent} from './producto/producto-detail/producto-detail.component';
+import {ImgFallbackDirective} from './core/img-fallback.directive';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {ProductoDetailComponent} from './producto/producto-detail/producto-detai
     ConfirmDialogComponent,
     InfoDialogComponent,
     ProductoDetailComponent,
+    ImgFallbackDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {ProductoModel} from '../producto/producto.model';
-import {filter, map, switchMap, take, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {FireAuthService} from './fire-auth.service';
 
@@ -58,25 +58,5 @@ export class FireDbService {
     return this.angularFireDb.object('productos/' + id).remove();
   }
 
-  eliminarProductoCarrito(id: number) {
-    return this.fireAuthService.userState.pipe(
-      take(1),
-      filter(user => user != null),
-      switchMap(user => user.uid),
-      tap(uid => this.angularFireDb.object('carritos/' + uid + '/' + id).remove())
-    ).subscribe();
-  }
 
-  agregarProductoCarrito(id: number, nombre: string) {
-    return this.fireAuthService.userState.pipe(
-      take(1),
-      filter(user => user != null),
-      switchMap(user => user.uid),
-      tap(uid => {
-        this.angularFireDb.object('carritos/' + uid + '/' + id).set(nombre)
-          .then(value1 => console.log('insercion carrito OK: ', value1))
-          .catch(reason => console.log('insercion carrito ERR: ', reason));
-      })
-    ).subscribe();
-  }
 }

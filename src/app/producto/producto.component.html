@@ -2,12 +2,16 @@
   <div class="row">
 
     <div class="col-md-6">
+      <app-producto-detail [selectedProduct]="selectedProducto"></app-producto-detail>
+    </div>
+
+    <div class="col-md-6">
       <div class="modal-header">
         <p class="h4 mb-2">Productos Disponibles</p>
       </div>
       <div class="modal-body">
         <ul class="list-group mb-2">
-          <li *ngFor="let producto of productoService.productosObs | async" class="list-group-item">
+          <li *ngFor="let producto of productoService.products | async" class="list-group-item">
             <div class="row">
               <div class="col-5">
                 {{producto.nombre}}
@@ -31,10 +35,7 @@
         <button mdbBtn color="info" block="true" class="" type="submit" (click)="editarProducto(null)">Nuevo Producto
         </button>
       </div>
-    </div>
-
-    <div class="col-md-6">
-      <app-producto-detail [selectedProduct]="selectedProducto"></app-producto-detail>
+      <p>{{removeResult}}</p>
     </div>
 
   </div>

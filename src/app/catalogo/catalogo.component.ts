@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FireDbService} from '../firebase/fire-db.service';
+import {Producto, ProductoService} from '../producto/producto.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -8,15 +8,15 @@ import {FireDbService} from '../firebase/fire-db.service';
 })
 export class CatalogoComponent implements OnInit {
 
-  constructor(public fireDbService: FireDbService) {
+  constructor(public productService: ProductoService) {
   }
 
   ngOnInit(): void {
 
   }
 
-  agregarProducto(id: number, nombre: string) {
-    return this.fireDbService.agregarProductoCarrito(id, nombre);
+  agregarProductoAlCarrito(producto: Producto) {
+    return this.productService.agregarProductoCarrito(producto);
   }
 
 }

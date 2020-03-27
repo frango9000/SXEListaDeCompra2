@@ -42,6 +42,7 @@ export class ProductoDetailComponent implements OnInit {
     if (this.product.nombre.trim().length > 0) {
       return this.productoService.insertar(this.product).then(_ => {
         this.insertResult = 'Insercion realizada';
+        setTimeout(() => this.insertResult = '', 3000);
         this.selectedProduct.next(null);
       });
     }
@@ -51,6 +52,7 @@ export class ProductoDetailComponent implements OnInit {
     if (this.product.nombre.trim().length > 0) {
       return this.productoService.editar(this.product).then(_ => {
         this.insertResult = 'Edicion realizada';
+        setTimeout(() => this.insertResult = '', 3000);
         this.selectedProduct.next(null);
       });
     }

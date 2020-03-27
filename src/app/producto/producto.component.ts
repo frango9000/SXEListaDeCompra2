@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {FireAuthService} from '../firebase/fire-auth.service';
-import {FireDbService} from '../firebase/fire-db.service';
 import {Producto, ProductoService} from './producto.service';
 import {Subject} from 'rxjs';
 
@@ -10,13 +8,11 @@ import {Subject} from 'rxjs';
   styleUrls: ['./producto.component.scss']
 })
 export class ProductoComponent implements OnInit {
-  private removeResult: string = '';
+  public removeResult: string = '';
 
   selectedProducto: Subject<Producto | null> = new Subject<Producto | null>();
 
-  constructor(private fireAuthService: FireAuthService,
-              public productoService: ProductoService,
-              public fireDbService: FireDbService) {
+  constructor(public productoService: ProductoService) {
   }
 
   ngOnInit(): void {
@@ -31,6 +27,7 @@ export class ProductoComponent implements OnInit {
   eliminarProducto(producto) {
     return this.productoService.eliminarProducto(producto).then(_ => {
       this.removeResult = 'Producto Eliminado';
+      setTimeout(() => this.removeResult = '', 3000);
     });
   }
 }

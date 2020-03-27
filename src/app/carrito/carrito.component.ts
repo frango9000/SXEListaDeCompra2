@@ -15,6 +15,6 @@ export class CarritoComponent implements OnInit {
   }
 
   eliminarProducto(id: number) {
-    return this.fireDbService.eliminarProductoCarrito(id);
+    // return this.fireDbService.eliminarProductoCarrito(id);
   }
 }

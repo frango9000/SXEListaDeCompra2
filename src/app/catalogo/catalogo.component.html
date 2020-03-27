@@ -2,34 +2,37 @@
 <!-- Card -->
 <div class="container">
   <div class="row">
-    <div *ngFor="let producto of this.fireDbService.productos | async" class="col col-lg-3 col-md-4 col-sm-6 p-1">
+    <div *ngFor="let product of productService.products | async" class="col-12 p-1">
       <mdb-card>
-        <div class="view rgba-white-slight waves-light" mdbWavesEffect>
-          <!-- Card img -->
-          <mdb-card-img src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
-                        alt="Card image cap"></mdb-card-img>
-          <a>
-            <div class="mask"></div>
-          </a>
-        </div>
+
         <!--Card content-->
         <mdb-card-body>
           <!--Title-->
-          <mdb-card-title>
-            <h4>{{producto.nombre}}</h4>
-          </mdb-card-title>
+          <div class="row">
 
-          <!--Text-->
-          <mdb-card-text>
-            id:{{producto.id}}
-          </mdb-card-text>
-          <div class="">
-            <a mdbBtn color="primary" mdbWavesEffect (click)="agregarProducto(producto.id, producto.nombre)">
-              Agregar
-              <mdb-icon fas icon="cart-plus" size="2x"></mdb-icon>
-            </a>
+            <div class="col-4 view rgba-white-slight  product-img-container ">
+              <label title="{{product.id}}"><img
+                appImgFallback="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
+                class="img-fluid" src="{{product.photoUrl}}" alt="{{product.id}}-image"/>
+              </label>
+            </div>
+
+            <!--Text-->
+            <mdb-card-text class="col-7">
+              <mdb-badge *ngIf="product.categoria" class="category-pill" pill="true" primary="true">
+                {{product.categoria}}
+              </mdb-badge>
+              <h4>{{product.nombre}}</h4>
+              <p>{{product.descripcion}}</p>
+            </mdb-card-text>
           </div>
         </mdb-card-body>
+        <mdb-card-footer class="modal-footer">
+          {{(product.precio ? product.precio : 0) | currency}}
+          <a mdbBtn color="primary" mdbWavesEffect (click)="agregarProductoAlCarrito(product)">
+            <mdb-icon fas icon="cart-plus" size="lg"></mdb-icon>
+          </a>
+        </mdb-card-footer>
       </mdb-card>
       <!-- Card -->
     </div>

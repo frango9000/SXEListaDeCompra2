@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {Subject} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class ProductoService {
   path = 'products/';
   ref = this.angularFireDb.database.ref(this.path);
   private productos: Producto[] = [];
-  productosObs: Subject<Producto[]> = new Subject<Producto[]>();
+  productosObs: BehaviorSubject<Producto[]> = new BehaviorSubject<Producto[]>(this.productos);
 
 
   constructor(public angularFireDb: AngularFireDatabase) {
